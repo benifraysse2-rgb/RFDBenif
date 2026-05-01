@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serpiente Nokia - Beni731</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #111; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; font-family: monospace; color: #ccc; }
+  h1 { font-size: 22px; color: #7fff7f; margin-bottom: 0.5rem; letter-spacing: 2px; }
+  #score-bar { font-size: 14px; margin-bottom: 0.75rem; }
+  #score-bar span { color: #fff; font-weight: bold; }
+  canvas { border: 2px solid #3faf3f; background: #1a2a1a; display: block; }
+  #msg { font-size: 13px; color: #888; margin-top: 0.5rem; min-height: 20px; }
+  #btn-start { margin-top: 0.75rem; padding: 8px 28px; font-size: 14px; font-family: monospace; background: #1a2a1a; color: #7fff7f; border: 1px solid #3faf3f; border-radius: 4px; cursor: pointer; }
+  #btn-start:hover { background: #2a3a2a; }
+  .dpad { display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px); gap: 4px; margin-top: 1rem; }
+  .dpad button { width: 48px; height: 48px; font-size: 18px; background: #1a2a1a; color: #aaa; border: 1px solid #3a4a3a; border-radius: 6px; cursor: pointer; }
+  .dpad button:active { background: #2a3a2a; transform: scale(0.93); }
+  .empty { visibility: hidden; }
+</style>
+</head>
+<body>
+<h1>SERPIENTE</h1>
+<div id="score-bar">Puntos: <span id="score">0</span> &nbsp;|&nbsp; Récord: <span id="hi">0</span></div>
+<canvas id="c" width="280" height="280"></canvas>
+<div id="msg">Presioná Start o una flecha para jugar</div>
+<button id="btn-start">▶ Start</button>
+<div class="dpad">
+  <div class="empty"></div>
+  <button id="up">▲</button>
+  <div class="empty"></div>
+  <button id="left">◀</button>
+  <div class="empty"></div>
+  <button id="right">▶</button>
+  <div class="empty"></div>
+  <button id="down">▼</button>
+  <div class="empty"></div>
+</div>
+
+<script>
+const COLS=14,ROWS=14,CS=20,GAP=1;
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score');
+const hiEl=document.getElementById('hi');
+const msgEl=document.getElementById('msg');
+let snake,dir,next,food,score,hi=0,loop,alive=false,started=false;
+
+function init(){
+  snake=[{x:7,y:7},{x:6,y:7},{x:5,y:7}];
+  dir={x:1,y:0}; next={x:1,y:0};
+  score=0; scoreEl.textContent=0;
+  alive=true; placeFood(); draw();
+}
+function placeFood(){
+  let pos;
+  do{ pos={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)}; }
+  while(snake.some(s=>s.x===pos.x&&s.y===pos.y));
+  food=pos;
+}
+function step(){
+  dir=next;
+  const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
+  if(head.x<0)head.x=COLS-1; if(head.x>=COLS)head.x=0;
+  if(head.y<0)head.y=ROWS-1; if(head.y>=ROWS)head.y=0;
+  if(snake.some(s=>s.x===head.x&&s.y===head.y)){gameOver();return;}
+  snake.unshift(head);
+  if(head.x===food.x&&head.y===food.y){
+    score++; scoreEl.textContent=score;
+    if(score>hi){hi=score;hiEl.textContent=hi;}
+    placeFood();
+  } else { snake.pop(); }
+  draw();
+}
+function draw(){
+  ctx.fillStyle='#1a2a1a'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  const ox=(canvas.width-COLS*(CS+GAP))/2, oy=(canvas.height-ROWS*(CS+GAP))/2;
+  snake.forEach((s,i)=>{
+    ctx.fillStyle=i===0?'#7fff7f':'#3faf3f';
+    ctx.fillRect(ox+s.x*(CS+GAP),oy+s.y*(CS+GAP),CS,CS);
+  });
+  ctx.fillStyle='#ff5555';
+  ctx.beginPath();
+  ctx.arc(ox+food.x*(CS+GAP)+CS/2,oy+food.y*(CS+GAP)+CS/2,CS/2-1,0,Math.PI*2);
+  ctx.fill();
+}
+function gameOver(){
+  alive=false; clearInterval(loop);
+  ctx.fillStyle='rgba(0,0,0,0.6)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#ffffff'; ctx.font='bold 20px monospace'; ctx.textAlign='center';
+  ctx.fillText('GAME OVER',canvas.width/2,canvas.height/2-10);
+  ctx.font='14px monospace';
+  ctx.fillText('Score: '+score,canvas.width/2,canvas.height/2+16);
+  msgEl.textContent='Presioná Start para jugar de nuevo';
+}
+function startGame(){
+  clearInterval(loop); msgEl.textContent='Usá las flechas o el D-Pad';
+  init(); loop=setInterval(step,140); started=true;
+}
+document.getElementById('btn-start').addEventListener('click',startGame);
+document.addEventListener('keydown',e=>{
+  const map={ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0}};
+  if(map[e.key]){
+    e.preventDefault();
+    const d=map[e.key];
+    if(d.x!==-dir.x||d.y!==-dir.y)next=d;
+    if(!started||!alive)startGame();
+  }
+});
+document.getElementById('up').addEventListener('click',()=>{if(dir.y!==1)next={x:0,y:-1};if(!alive)startGame();});
+document.getElementById('down').addEventListener('click',()=>{if(dir.y!==-1)next={x:0,y:1};if(!alive)startGame();});
+document.getElementById('left').addEventListener('click',()=>{if(dir.x!==1)next={x:-1,y:0};if(!alive)startGame();});
+document.getElementById('right').addEventListener('click',()=>{if(dir.x!==-1)next={x:1,y:0};if(!alive)startGame();});
+init();
+</script>
+</body>
+</html>
