@@ -262,6 +262,10 @@
     border: 1px solid #ddd;
     padding: 4px 10px;
   }
+
+  @keyframes blinker {
+    50% { opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -276,13 +280,20 @@
 </nav>
 
 <div class="page active" id="home">
+  <div style="background: #ff0000; color: white; padding: 20px; border: 4px solid black; margin-bottom: 20px; font-family: 'Orbitron', sans-serif; text-align: center; animation: blinker 1.5s linear infinite;">
+    <h2 style="font-size: 1.5rem;">🚨 ALERT: BENIF STUDIOS CLOSING 🚨</h2>
+    <p style="font-size: 1rem; margin-top: 10px;">
+      Attention: Starting December 30/31, 2026 or in ones days to 2027, Benif Studios will shut down. 
+      Download everything now and join Radmin VPN to stay connected!
+    </p>
+  </div>
+
   <div class="home-hero">
     <h1>RFD BENIF</h1>
     <div class="subtitle">// WELCOME TO THE OFFICIAL PAGE //</div>
     <p>
       Welcome to the official RFD Benif Page! Here you can find everything you need about RFD —
       download the game, check server IPs, and stay up to date with the community.
-      Use the navigation above to explore the site.
     </p>
     <div class="home-badges">
       <span class="badge red">RFD</span>
@@ -297,8 +308,7 @@
   <div class="download-card">
     <h2>Install RFD</h2>
     <p>
-      Ready to play RFD? Click the button below to go to the official download page
-      and install the game. Make sure to follow the instructions on the install page.
+      Ready to play? Click below to go to the official download page.
     </p>
     <a class="install-btn" href="https://beepboopbap.itch.io/filtering-disabled" target="_blank">
       ⬇ Install RFD
@@ -309,10 +319,20 @@
 <div class="page" id="server">
   <div class="page-title">SERVER IP!</div>
 
+  <div class="download-card" style="border-color: var(--orange); background: #fff5e6; margin-bottom: 25px;">
+    <h2 style="color: var(--orange); font-size: 1.1rem;">⚠️ REQUIRED ACTION</h2>
+    <p style="font-weight: bold; color: #333; margin-bottom: 10px;">
+      hi download this vpn or you no can create a server or join the servers list
+    </p>
+    <a class="install-btn" href="https://www.radmin-vpn.com/" target="_blank" style="background: var(--orange); border-bottom-color: #cc7a00; padding: 10px 20px; font-size: 0.8rem;">
+      Download Radmin VPN
+    </a>
+  </div>
+
   <div class="ip-card">
     <div class="ip-dot inactive"></div>
     <div class="ip-info">
-      <div class="ip-label">My Friend's Server</div>
+      <div class="ip-label">Friend's Server</div>
       <div class="ip-address">26.242.51.202</div>
       <div class="ip-status inactive">⚠ Status: Much Inactive</div>
     </div>
