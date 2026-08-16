@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Roblox</title>
+    <link rel="icon" href="https://web.archive.org/web/20180507201204im_/https://images.rbxcdn.com/1387da00c070fd34110985aee87f3155.ico.gzip">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "H вершин", "Source Sans Pro", Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #e3e3e3;
+            color: #393b3d;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: #0074bd;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .roblox-logo-img {
+            height: 26px;
+            width: auto;
+            display: block;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .btn-signup {
+            background-color: #00a2ff;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Subheader Navigation */
+        .sub-nav {
+            background-color: #232527;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .sub-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .sub-nav a {
+            color: #b8b8b8;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .sub-nav a.active, .sub-nav a:hover {
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 970px;
+            width: 100%;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #393b3d;
+            border-bottom: 1px solid #e3e3e3;
+            padding-bottom: 10px;
+        }
+
+        /* Single Game Display Area */
+        .games-grid {
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .game-card {
+            width: 180px;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 1px solid #e0e0e0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .game-thumbnail-wrapper {
+            width: 100%;
+            height: 180px;
+            background-color: #f2f2f2;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-details {
+            padding: 10px;
+        }
+
+        .game-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #393b3d;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+
+        .game-creator {
+            font-size: 11px;
+            color: #757575;
+            margin-bottom: 8px;
+        }
+
+        .game-stats {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            color: #757575;
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #00a2ff;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            border-top: 1px solid #e3e3e3;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #757575;
+            margin-top: auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #393b3d;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Principal -->
+    <header>
+        <div class="logo-container">
+            <a href="#">
+                <img src="https://fontmeme.com/temporary/bd701032383832c5bd2c3cd8d3de7d1f.png" alt="Roblox Logo" class="roblox-logo-img">
+            </a>
+        </div>
+        <div class="user-nav">
+            <a href="#" class="btn-signup">Registrarse</a>
+            <a href="#" style="color:white; text-decoration:none;">Iniciar sesión</a>
+        </div>
+    </header>
+
+    <!-- Navegación Secundaria (Solo Juegos) -->
+    <nav class="sub-nav">
+        <ul>
+            <li><a href="#" class="active">Juegos</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="container">
+        <h2 class="section-title">Juegos Recomendados</h2>
+        
+        <div class="games-grid">
+            <!-- Único Juego con Enlace Configurado -->
+            <a href="https://sites.google.com/view/natural-disaster-rfd/p%C3%A1gina-principal" class="game-card">
+                <div class="game-thumbnail-wrapper">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReFNlbgYeoeK0p8jYKIkAFHw4RIgBuM9SiFod_szto1w&s=10" 
+                         alt="Natural Disasters" 
+                         class="game-thumbnail">
+                </div>
+                <div class="game-details">
+                    <div class="game-name">natural disasters</div>
+                    <div class="game-creator">De / By @Stickmasterluke</div>
+                    <div class="game-stats">
+                        <span class="rating-bar">👍 98%</span>
+                        <span>👥 0</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer>
+        <ul class="footer-links">
+            <li><a href="#">Sobre nosotros</a></li>
+            <li><a href="#">Empleos</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Padres</a></li>
+            <li><a href="#">Ayuda</a></li>
+            <li><a href="#">Términos</a></li>
+            <li><a href="#">Privacidad</a></li>
+        </ul>
+        <p>©2018 Roblox Corporation. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
